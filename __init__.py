@@ -1,6 +1,7 @@
 from mycroft import MycroftSkill, intent_file_handler
 from mycroft.util import get_ipc_directory
 from alsaaudio import Mixer
+import io
 import os
 import os.path
 
@@ -15,7 +16,7 @@ class AutoSetVolume(MycroftSkill):
         self.filename=os.path.join(get_ipc_directory(), "mic_level")
         self.level = 25
         self.mixer = Mixer()
-        
+
     @intent_file_handler('volume.set.auto.intent')
     def handle_volume_set_auto(self, message):
         self.speak_dialog('volume.set.auto')
