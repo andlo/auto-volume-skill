@@ -16,7 +16,7 @@ class AutoSetVolume(MycroftSkill):
         #self.filename = os.path.join(get_ipc_directory(), "mic_level")
         #self.level = 25
         #self.mixer = Mixer()
-        autovolume = True
+        self.autovolume = True
         
 
     @intent_file_handler('volume.set.auto.intent')
