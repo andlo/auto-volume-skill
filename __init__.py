@@ -36,7 +36,10 @@ class AutoSetVolume(MycroftSkill):
                 parts = line.split("=")
                 meter_thresh = float(parts[-1])
                 meter_cur = float(parts[-2].split(" ")[0])
-                self.level = int(meter_cur)*10
+                if meter_cur > 20:
+                    self.level == 75
+                if meter_cur < 20:
+                    self.level = 25
                 self.mixer.setvolume(self.level)
         
 
