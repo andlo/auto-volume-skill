@@ -23,26 +23,26 @@ class AutoSetVolume(MycroftSkill):
     def handle_volume_set_auto(self, message):
         self.speak_dialog('volume.set.auto')
 
-    def auto_set_volume():
-        global meter_cur
-        global meter_thresh
-        with io.open(self.filename, 'r') as fh:
-            fh.seek(0)
-            while True:
-                line = fh.readline()
-                if line == "":
-                    break
+def auto_set_volume():
+    global meter_cur
+    global meter_thresh
+    with io.open(self.filename, 'r') as fh:
+        fh.seek(0)
+        while True:
+            line = fh.readline()
+            if line == "":
+                break
 
-                # Just adjust meter settings
-                # Ex:Energy:  cur=4 thresh=1.5
-                parts = line.split("=")
-                meter_thresh = float(parts[-1])
-                meter_cur = float(parts[-2].split(" ")[0])
-                if int(meter_thresh) > 10:
-                    self.level == 75
-                if int(meter_thresh) < 10:
-                    self.level = 25
-                self.mixer.setvolume(self.level)
+            # Just adjust meter settings
+            # Ex:Energy:  cur=4 thresh=1.5
+            parts = line.split("=")
+            meter_thresh = float(parts[-1])
+            meter_cur = float(parts[-2].split(" ")[0])
+            if int(meter_thresh) > 10:
+                self.level == 75
+            if int(meter_thresh) < 10:
+                self.level = 25
+            self.mixer.setvolume(self.level)
 
         
         
