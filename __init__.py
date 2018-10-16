@@ -40,7 +40,7 @@ class AutoSetVolume(MycroftSkill):
                     self.level == 75
                 if meter_cur < 20:
                     self.level = 25
-                self.mixer.setvolume(self.level)
+                self.mixer.setvolume(25)
         
 
 
