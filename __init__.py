@@ -16,11 +16,6 @@ class AutoSetVolume(MycroftSkill):
         self.filename=os.path.join(get_ipc_directory(), "mic_level")
         self.level = 25
         self.mixer = Mixer()
-
-    @intent_file_handler('volume.set.auto.intent')
-    def handle_volume_set_auto(self, message):
-        self.speak_dialog('volume.set.auto')
-
         global meter_cur
         global meter_thresh
 
@@ -41,6 +36,13 @@ class AutoSetVolume(MycroftSkill):
                 if meter_cur < 10:
                     self.level = 25
                 self.mixer.setvolume(self.level)
+
+
+    @intent_file_handler('volume.set.auto.intent')
+    def handle_volume_set_auto(self, message):
+        self.speak_dialog('volume.set.auto')
+
+        
         
 
 
