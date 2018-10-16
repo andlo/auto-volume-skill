@@ -25,7 +25,7 @@ class AutoSetVolume(MycroftSkill):
         global meter_thresh
 
         with io.open(self.filename, 'r') as fh:
-            fh.seek(bytefrom)
+            fh.seek(0)
             while True:
                 line = fh.readline()
                 if line == "":
