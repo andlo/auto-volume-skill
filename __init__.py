@@ -13,7 +13,7 @@ import os.path
 class AutoSetVolume(MycroftSkill):
     def __init__(self):
         MycroftSkill.__init__(self)
-        self.filename=os.path.join(get_ipc_directory(), "mic_level")
+        self.filename = os.path.join(get_ipc_directory(), "mic_level")
         self.level = 25
         self.mixer = Mixer()
         
@@ -37,9 +37,9 @@ class AutoSetVolume(MycroftSkill):
                 parts = line.split("=")
                 meter_thresh = float(parts[-1])
                 meter_cur = float(parts[-2].split(" ")[0])
-                if meter_thresh > 10:
+                if int(meter_thresh) > 10:
                     self.level == 75
-                if meter_thresh < 10:
+                if int(meter_thresh) < 10:
                     self.level = 25
                 self.mixer.setvolume(self.level)
 
