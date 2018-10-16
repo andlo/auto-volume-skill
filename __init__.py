@@ -16,36 +16,35 @@ class AutoSetVolume(MycroftSkill):
         #self.filename = os.path.join(get_ipc_directory(), "mic_level")
         #self.level = 25
         #self.mixer = Mixer()
-        self.autovolume = True
-        self.auto_set_volume
+        global autovolume = True
         
 
     @intent_file_handler('volume.set.auto.intent')
     def handle_volume_set_auto(self, message):
         self.speak_dialog('volume.set.auto')
 
-    def auto_set_volume():
-        global meter_cur
-        global meter_thresh
-        mixer = Mixer()
-        while self.autovolume:
-            with io.open(os.path.join(get_ipc_directory(), "mic_level"), 'r') as fh:
-                fh.seek(0)
-                while True:
-                    line = fh.readline()
-                    if line == "":
-                        break
+def auto_set_volume():
+    global meter_cur
+    global meter_thresh
+    mixer = Mixer()
+    while autovolume:
+        with io.open(os.path.join(get_ipc_directory(), "mic_level"), 'r') as fh:
+            fh.seek(0)
+            while True:
+                line = fh.readline()
+                if line == "":
+                    break
 
-                    # Just adjust meter settings
-                    # Ex:Energy:  cur=4 thresh=1.5
-                    parts = line.split("=")
-                    meter_thresh = float(parts[-1])
-                    meter_cur = float(parts[-2].split(" ")[0])
-                    if int(meter_thresh) > 10:
-                        mixer.setvolume(74)
-                    if int(meter_thresh) < 10:
-                        mixer.setvolume(25)
-                
+                # Just adjust meter settings
+                # Ex:Energy:  cur=4 thresh=1.5
+                parts = line.split("=")
+                meter_thresh = float(parts[-1])
+                meter_cur = float(parts[-2].split(" ")[0])
+                if int(meter_thresh) > 10:
+                    mixer.setvolume(74)
+                if int(meter_thresh) < 10:
+                    mixer.setvolume(25)
+            
 
         
         
