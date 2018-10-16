@@ -31,8 +31,8 @@ def auto_set_volume():
         fh.seek(0)
         while True:
             line = fh.readline()
-            #if line == "":
-            #    break
+            if line == "":
+                break
 
             # Just adjust meter settings
             # Ex:Energy:  cur=4 thresh=1.5
