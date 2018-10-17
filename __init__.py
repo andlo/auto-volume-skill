@@ -16,7 +16,7 @@ class AutoSetVolume(MycroftSkill):
         MycroftSkill.__init__(self)
         self.filename = os.path.join(get_ipc_directory(), "mic_level")
         self.mixer = Mixer()
-        self.schedule_repeating_event(auto_set_volume, 60, data=None, name=None)
+        self.schedule_repeating_event(self.auto_set_volume, 60, data=None, name=None)
         
 
     @intent_file_handler('volume.set.auto.intent')
