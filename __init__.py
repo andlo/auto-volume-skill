@@ -31,7 +31,7 @@ class AutoSetVolume(MycroftSkill):
         with io.open(self.filename, 'r') as fh:
             fh.seek(0)
             # while True:
-         #   line = fh.readline()
+            line = fh.readline()
          #   if line == "":
          #       break
 
