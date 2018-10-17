@@ -45,7 +45,7 @@ class AutoSetVolume(MycroftSkill):
                     volume = 75
                 if meter_thresh < 5:
                     volume = 35
-                self.log.warn(meter_thresh)
+                self.log.warn(volume)
                 self.mixer.setvolume(volume)
                 
             
