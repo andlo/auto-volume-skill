@@ -14,6 +14,8 @@ import os.path
 class AutoSetVolume(MycroftSkill):
     def __init__(self):
         MycroftSkill.__init__(self)
+    
+    def initialize()
         self.filename = os.path.join(get_ipc_directory(), "mic_level")
         self.mixer = Mixer()
         self.schedule_repeating_event(self.auto_set_volume, None,60, 'AutoSetVolume')
