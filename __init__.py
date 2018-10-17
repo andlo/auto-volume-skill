@@ -4,6 +4,7 @@ from alsaaudio import Mixer
 import io
 import os
 import os.path
+import daytime
 
    # Monitor IPC file containing microphone level info
    #   start_mic_monitor(os.path.join(get_ipc_directory(), "mic_level"))
@@ -15,7 +16,7 @@ class AutoSetVolume(MycroftSkill):
         MycroftSkill.__init__(self)
         self.filename = os.path.join(get_ipc_directory(), "mic_level")
         self.mixer = Mixer()
-        schedule_repeating_event(auto_set_volume, , 60, data=None, name=None)
+        schedule_repeating_event(auto_set_volume, datetime.datetime.now(), 60, data=None, name=None)
         
 
     @intent_file_handler('volume.set.auto.intent')
