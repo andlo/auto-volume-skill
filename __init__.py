@@ -28,7 +28,7 @@ class AutoSetVolume(MycroftSkill):
     def auto_set_volume(self, message):
         global meter_cur
         global meter_thresh
-        with io.open(self.filename, 'r') as fh:
+        with io.open(self.filename, 'r',256) as fh:
             fh.seek(0)
             # while True:
             line = fh.readline()
@@ -45,7 +45,7 @@ class AutoSetVolume(MycroftSkill):
             if int(meter_thresh) < 10:
                 self.mixer.setvolume(35)
             self.log.warn("autosetvolume !!!!")
-        io.close()
+        
             
 def create_skill():
     return AutoSetVolume()
