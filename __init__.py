@@ -33,7 +33,8 @@ class AutoSetVolume(MycroftSkill):
             while True:
                 line = fh.readline()
                 if line == "":
-                   break
+                    self.log.warn("blank")
+                    break
 
                 # Just adjust meter settings
                 # Ex:Energy:  cur=4 thresh=1.5
