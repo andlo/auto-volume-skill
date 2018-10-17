@@ -33,19 +33,18 @@ class AutoSetVolume(MycroftSkill):
             while True:
                 line = fh.readline()
                 if line == "":
-                    self.log.warn("blank")
                     break
 
                 # Just adjust meter settings
                 # Ex:Energy:  cur=4 thresh=1.5
                 parts = line.split("=")
                 meter_thresh = float(parts[-1])
-                meter_cur = float(parts[-2].split(" ")[0])
-                if meter_thresh > 5:
+                # meter_cur = float(parts[-2].split(" ")[0])
+                if meter_thresh > 7:
                     volume = 75
                 if meter_thresh < 5:
                     volume = 35
-                self.log.info(volume)
+                #self.log.info("Setting volume to" + volume)
                 self.mixer.setvolume(volume)
                 
             
