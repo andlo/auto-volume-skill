@@ -42,11 +42,11 @@ class AutoSetVolume(MycroftSkill):
                 meter_cur = float(parts[-2].split(" ")[0])
                 if int(meter_thresh) > 10:
                     self.mixer.setvolume(75)
-                    self.log.warn("High")
+                    #self.log.warn("High")
                 if int(meter_thresh) < 10:
                     self.mixer.setvolume(35)
-                    self.log.warn("Low")
-                self.log.warn(int(meter_thresh))
+                    #self.log.warn("Low")
+                #self.log.warn(int(meter_thresh))
         
             
 def create_skill():
