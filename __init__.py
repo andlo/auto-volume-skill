@@ -31,9 +31,9 @@ class AutoSetVolume(MycroftSkill):
         with io.open(self.filename, 'r') as fh:
             fh.seek(0)
             # while True:
-            line = fh.readline()
-            if line == "":
-                break
+         #   line = fh.readline()
+         #   if line == "":
+         #       break
 
             # Just adjust meter settings
             # Ex:Energy:  cur=4 thresh=1.5
