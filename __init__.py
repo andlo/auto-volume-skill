@@ -19,11 +19,11 @@ class AutoSetVolume(MycroftSkill):
         self.filename = os.path.join(get_ipc_directory(), "mic_level")
         self.mixer = Mixer()
         self.schedule_repeating_event(self.auto_set_volume, None,5, 'AutoSetVolume')
-        if self.settings.get('HighNoice') == None:
-            self.settings['HighNoice'] = 7
+        #if self.settings.get('HighNoice') == None:
+        #    self.settings['HighNoice'] = 7
         
-        if self.settings.get('LowNoice') == None:
-            self.settings['LowNoice'] = 3
+        #if self.settings.get('LowNoice') == None:
+        #    self.settings['LowNoice'] = 3
             
 
     @intent_file_handler('volume.set.auto.intent')
@@ -47,15 +47,13 @@ class AutoSetVolume(MycroftSkill):
                 meter_thresh = float(parts[-1])
                 # meter_cur = float(parts[-2].split(" ")[0])
                 
+                # Store the thresh level
                 if meter_thresh > float(self.settings.get('HighNoice')):
                     self.settings['HighNoice'] = meter_thresh
-                    self.log.info("Storing new HighNoice value" + str(meter_thresh))
                 elif meter_thresh < float(self.settings.get('LowNoice')):
                     self.settings['LowNoice'] = meter_thresh
-                    self.log.info("Storing new LowNoice value" + str(meter_thresh))
                 
                 range = self.settings.get('HighNoice') - self.settings.get('LowNoice')
-                
                 low = self.settings.get('LowNoice') + (range/10)
                 high = self.settings.get('HighNoice') - (range/5) 
                 self.log.info("LowLevel: " + str(low) + " HighLevel: " + str(high))
