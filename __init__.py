@@ -1,5 +1,6 @@
 from mycroft import MycroftSkill, intent_file_handler
 from mycroft.util import get_ipc_directory
+from mycroft.skills.audioservice import AudioService
 from alsaaudio import Mixer
 import io
 import os
@@ -26,7 +27,7 @@ class AutoSetVolume(MycroftSkill):
         self.speak_dialog('volume.set.auto')
 
     def auto_set_volume(self, message):
-        #global meter_cur
+        mycroft.util.wait_while_speaking()
         global meter_thresh
         
         with io.open(self.filename, 'r') as fh:
@@ -61,15 +62,16 @@ class AutoSetVolume(MycroftSkill):
                               " HighNoice :" + str(self.settings.get('HighNoice')) + 
                               " HighLevel: " + str(highlevel))
 
-                volume = 50
-                if meter_thresh > highlevel:
-                    volume = 75
-                if meter_thresh < lowlevel:
-                    volume = 35
-                if meter_thresh < highlevel and meter_thresh > lowlevel:
-                    volume = 60
-                self.log.info("Mesure mic: " + str(meter_thresh) + " Setting volume to " + str(volume))
-                self.mixer.setvolume(volume)
+                if not self.audio_service.is_playing:
+                    volume = 50
+                    if meter_thresh > highlevel:
+                        volume = 75
+                    if meter_thresh < lowlevel:
+                        volume = 35
+                    if meter_thresh < highlevel and meter_thresh > lowlevel:
+                        volume = 60
+                    self.log.info("Mesure mic: " + str(meter_thresh) + " Setting volume to " + str(volume))
+                    self.mixer.setvolume(volume)
 
                 
             
