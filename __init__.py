@@ -45,7 +45,7 @@ class AutoSetVolume(MycroftSkill):
                 if meter_thresh >= self.settings.get('HighNoice'):
                     self.settings['HighNoice'] = meter_thresh
                     self.log.info("Storing new HighNoice value" + meter_tresh)
-                else if meter_thresh <= self.settings.get('LowNoice')
+                elif meter_thresh <= self.settings.get('LowNoice')
                     self.settings['LowNooice'] = meter_thresh
                     self.log.info("Storing new LowNoice value" + meter_tresh)
 
