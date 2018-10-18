@@ -67,7 +67,7 @@ class AutoSetVolume(MycroftSkill):
                     volume = 75
                 if meter_thresh < lowlevel:
                     volume = 35
-                if meter_thresh < high and meter_thresh > low:
+                if meter_thresh < highlevel and meter_thresh > lowlevel:
                     volume = 60
                 self.log.info("Mesure mic: " + str(meter_thresh) + " Setting volume to " + str(volume))
                 self.mixer.setvolume(volume)
