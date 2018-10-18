@@ -31,6 +31,12 @@ class AutoSetVolume(MycroftSkill):
     def handle_volume_set_auto(self, message):
         self.speak_dialog('volume.set.auto')
 
+    @intent_file_handler('reset.intent')
+    def handle_volume_set_auto(self, message):
+        self.settings('HighNoice') = None
+        self.settings('LowNoice') = None
+        self.speak_dialog('reset.volume.set.auto')   
+
     def auto_set_volume(self, message):
         wait_while_speaking()
         #global meter_thresh
