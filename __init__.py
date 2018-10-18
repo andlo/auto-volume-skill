@@ -1,5 +1,6 @@
 from mycroft import MycroftSkill, intent_file_handler
 from mycroft.util import get_ipc_directory
+from mycrosoft.util import wait_while_speaking
 from mycroft.skills.audioservice import AudioService
 from alsaaudio import Mixer
 import io
