@@ -22,7 +22,7 @@ class AutoSetVolume(MycroftSkill):
         if self.settings.get('HighNoice') = None:
             self.settings['HighNooice'] = 7
         
-        if self.settings.get('HighNoice') = None:
+        if self.settings.get('LowNoice') = None:
             self.settings['LowNooice'] = 3
             
 
