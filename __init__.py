@@ -31,8 +31,8 @@ class AutoSetVolume(MycroftSkill):
         self.speak_dialog('volume.set.auto')
 
     def auto_set_volume(self, message):
-        global meter_cur
-        #global meter_thresh
+        #global meter_cur
+        global meter_thresh
         
         with io.open(self.filename, 'r') as fh:
             #fh.seek(0)
