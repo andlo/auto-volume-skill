@@ -39,7 +39,7 @@ class AutoSetVolume(MycroftSkill):
                 # Just adjust meter settings
                 # Ex:Energy:  cur=4 thresh=1.5
                 parts = line.split("=")
-                meter_thresh = int(parts[-1])
+                meter_thresh = int(float(parts[-1]))
                 # meter_cur = float(parts[-2].split(" ")[0])
                 
                 # Store the thresh level
