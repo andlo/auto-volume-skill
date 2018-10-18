@@ -20,10 +20,10 @@ class AutoSetVolume(MycroftSkill):
         self.mixer = Mixer()
         self.schedule_repeating_event(self.auto_set_volume, None,5, 'AutoSetVolume')
         if self.settings.get('HighNoice') == None:
-            self.settings['HighNooice'] = 7
+            self.settings['HighNoice'] = 7
         
         if self.settings.get('LowNoice') == None:
-            self.settings['LowNooice'] = 3
+            self.settings['LowNoice'] = 3
             
 
     @intent_file_handler('volume.set.auto.intent')
