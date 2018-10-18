@@ -53,11 +53,11 @@ class AutoSetVolume(MycroftSkill):
                 high = self.settings.get('HighNoice') - low / 2
                 self.log.info("LovLevel: " + low + " HighLevel: " + high)
 
-                if meter_thresh > High:
+                if meter_thresh > high:
                     volume = 75
-                if meter_thresh < Low:
+                if meter_thresh < low:
                     volume = 35
-                if meter_thresh > High and meter_thresh < Low
+                if meter_thresh > high and meter_thresh < low
                     volume 60
                 self.log.info("Setting volume to" + volume)
                 self.mixer.setvolume(volume)
