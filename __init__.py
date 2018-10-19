@@ -52,7 +52,7 @@ class AutoSetVolume(MycroftSkill):
                     messure_thresh = messure_thresh + int(float(parts[-1]))
                     count = count + 1
                     # self.settings['LowNoice'] = (self.settings['LowNoice'] + int(float(parts[-1]))) /2
-                    self.log.info(line + str(count))
+                    self.log.info(line + "     " +str(count))
         self.settings['LowNoice'] = messure_thresh / count
         self.log.info("Setting LowNoice to: " + str(self.settings.get('LowNoice')))
         self.speak_dialog('messure.ok')  
@@ -90,8 +90,10 @@ class AutoSetVolume(MycroftSkill):
                 # return 100 * float(part)/float(whole)
                 #  return (percent * whole) / 100.0
                 range = self.settings.get('HighNoice') - self.settings.get('LowNoice')
-                lowlevel = self.settings.get('LowNoice') + int((10 * range) / 100)
-                highlevel = self.settings.get('HighNoice') - int((20 * range) /100)
+                #lowlevel = self.settings.get('LowNoice') + int((10 * range) / 100)
+                lowlevel = self.settings.get('LowNoice') + int((10 * self.settings.get('LowNoice')) / 100)
+                
+            #    highlevel = self.settings.get('HighNoice') - int((20 * range) /100)
             #    self.log.info("LovNoice: " + str(self.settings.get('LowNoice')) + 
             #                  " LowLevel: " + str(lowlevel) + 
             #                  " HighNoice :" + str(self.settings.get('HighNoice')) + 
@@ -99,11 +101,11 @@ class AutoSetVolume(MycroftSkill):
 
                 if not self.audio_service.is_playing:
                     volume = 50
-                    if meter_thresh > highlevel:
-                        volume = self.settings.get('High volume')
+                #    if meter_thresh > highlevel:
+                #        volume = self.settings.get('High volume')
                     if meter_thresh < lowlevel:
                         volume = self.settings.get('Low volume')
-                    if meter_thresh < highlevel and meter_thresh > lowlevel:
+                    else:
                         volume = self.settings.get('Normal volume')
                     self.log.info("Mesure mic: " + str(meter_thresh) + " Setting volume to :" + str(volume) + "%")
                     #self.log.info(line)
