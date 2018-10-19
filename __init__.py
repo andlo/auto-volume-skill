@@ -34,8 +34,9 @@ class AutoSetVolume(MycroftSkill):
 
     @intent_file_handler('reset.intent')
     def handle_volume_set_auto(self, message):
-        timeout = time.time() + 60*1   # 5 minutes from now
+        timeout = time.time() + 30   # 5 minutes from now
         self.speak_dialog('messure.lowlevel')
+        self.settings['LowNoice'] = 0
         while True:
             if time.time() > timeout:
                 break
@@ -48,27 +49,11 @@ class AutoSetVolume(MycroftSkill):
                             break
                         # Ex:Energy:  cur=4 thresh=1.5
                         parts = line.split("=")
-                        meter_thresh = (meter_thresh + int(float(parts[-1]))) /2
-        self.settings['LowNoice'] = meter_thresh
+                        self.settings['LowNoice'] = (self.settings['LowNoice'] + int(float(parts[-1]))) /2
+        self.log.info("Setting LowNoice to: " + self.settings.get('LowNoice'))
         self.speak_dialog('messure.ok')  
         
-        self.speak_dialog('messure.highlevel')
-        while True:
-            if time.time() > timeout:
-                break
-                with io.open(self.filename, 'r') as fh:
-                    #fh.seek(0)
-                    meter_thresh = 0
-                    while True:
-                        line = fh.readline()
-                        if line == "":
-                            break
-                        # Ex:Energy:  cur=4 thresh=1.5
-                        parts = line.split("=")
-                        meter_thresh = (meter_thresh + int(float(parts[-1]))) /2
-        self.settings['HighNoice'] = meter_thresh
-        self.speak_dialog('messure.ok')  
-
+        
 
     def auto_set_volume(self, message):
         wait_while_speaking()
