@@ -69,7 +69,7 @@ class AutoSetVolume(MycroftSkill):
                 #  return (percent * whole) / 100.0
                 range = self.settings.get('HighNoice') - self.settings.get('LowNoice')
                 lowlevel = self.settings.get('LowNoice') + int((10 * range) / 100)
-                highlevel = self.settings.get('HighNoice') - int((20 * range) /100))
+                highlevel = self.settings.get('HighNoice') - int((20 * range) /100)
                 self.log.info("LovNoice: " + str(self.settings.get('LowNoice')) + 
                               " LowLevel: " + str(lowlevel) + 
                               " HighNoice :" + str(self.settings.get('HighNoice')) + 
