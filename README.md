@@ -9,6 +9,6 @@ This skill sets the volume level automatly depending how much noice is in the ro
 
 
 ## Credits
-Andreas Lorensen
+Andreas Lorensen.
 
 
