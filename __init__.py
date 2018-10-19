@@ -34,7 +34,7 @@ class AutoSetVolume(MycroftSkill):
 
     @intent_file_handler('reset.intent')
     def handle_volume_set_auto(self, message):
-        timeout = time.time() + 30   # 5 minutes from now
+        timeout = time.time() + 10   # 5 minutes from now
         self.speak_dialog('messure.lowlevel')
         self.count = 0
         self.messure_thresh = 0
@@ -53,10 +53,10 @@ class AutoSetVolume(MycroftSkill):
                         self.count = self.count + 1
                         # self.settings['LowNoice'] = (self.settings['LowNoice'] + int(float(parts[-1]))) /2
                         self.log.info(line + str(count))
-        self.settings['LowNoice'] = self.messure_thresh / self.count
-        self.log.info("Setting LowNoice to: " + str(self.settings.get('LowNoice')))
-        self.speak_dialog('messure.ok')  
-        
+            self.settings['LowNoice'] = self.messure_thresh / self.count
+            self.log.info("Setting LowNoice to: " + str(self.settings.get('LowNoice')))
+            self.speak_dialog('messure.ok')  
+            
         
 
     def auto_set_volume(self, message):
