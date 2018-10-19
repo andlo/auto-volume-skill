@@ -53,7 +53,7 @@ class AutoSetVolume(MycroftSkill):
                     count = count + 1
                     # self.settings['LowNoice'] = (self.settings['LowNoice'] + int(float(parts[-1]))) /2
                     self.log.info(line + " ==== " +str(count))
-        time.sleep(1)
+            time.sleep(1)
         self.settings['LowNoice'] = messure_thresh / count
         self.log.info("Setting LowNoice to: " + str(self.settings.get('LowNoice')))
         self.speak_dialog('messure.ok')  
