@@ -50,8 +50,9 @@ class AutoSetVolume(MycroftSkill):
 
                 # Ex:Energy:  cur=4 thresh=1.5
                 parts = line.split("=")
-                meter_thresh = float(parts[-1])
-                # meter_cur = float(parts[-2].split(" ")[0])
+                #meter_thresh = float(parts[-1])
+                meter_cur = float(parts[-2].split(" ")[0])
+                meter_thresh = meter_cur
                 
                 # Store the thresh level
                 if self.settings.get('HighNoice') == None:
