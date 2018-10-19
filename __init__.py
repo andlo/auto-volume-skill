@@ -74,7 +74,7 @@ class AutoSetVolume(MycroftSkill):
         
 
     def auto_set_volume(self, message):
-        if self.autovolume = True and not self.audio_service.is_playing:
+        if self.autovolume and not self.audio_service.is_playing:
             wait_while_speaking()
             with io.open(self.filename, 'r') as fh:
                 while True:
