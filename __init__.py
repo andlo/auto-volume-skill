@@ -41,18 +41,18 @@ class AutoSetVolume(MycroftSkill):
         while True:
             if time.time() > timeout:
                 break
-                with io.open(self.filename, 'r') as fh:
-                    #fh.seek(0)
-                    while True:
-                        line = fh.readline()
-                        if line == "":
-                            break
-                        # Ex:Energy:  cur=4 thresh=1.5
-                        parts = line.split("=")
-                        self.messure_thresh = self.messure_thresh + int(float(parts[-1]))
-                        self.count = self.count + 1
-                        # self.settings['LowNoice'] = (self.settings['LowNoice'] + int(float(parts[-1]))) /2
-                        self.log.info(line + str(count))
+            with io.open(self.filename, 'r') as fh:
+                #fh.seek(0)
+                while True:
+                    line = fh.readline()
+                    if line == "":
+                        break
+                    # Ex:Energy:  cur=4 thresh=1.5
+                    parts = line.split("=")
+                    self.messure_thresh = self.messure_thresh + int(float(parts[-1]))
+                    self.count = self.count + 1
+                    # self.settings['LowNoice'] = (self.settings['LowNoice'] + int(float(parts[-1]))) /2
+                    self.log.info(line + str(count))
         self.settings['LowNoice'] = self.messure_thresh / self.count
         self.log.info("Setting LowNoice to: " + str(self.settings.get('LowNoice')))
         self.speak_dialog('messure.ok')  
