@@ -18,7 +18,7 @@ class AutoSetVolume(MycroftSkill):
         self.filename = os.path.join(get_ipc_directory(), "mic_level")
         self.audio_service = AudioService(self.bus)
         self.mixer = Mixer()
-        self.schedule_repeating_event(self.auto_set_volume, None,15, 'AutoSetVolume')
+        self.schedule_repeating_event(self.auto_set_volume, None,5, 'AutoSetVolume')
 
         self.autovolume = True
         if self.settings.get('High volume') == None:
@@ -51,6 +51,7 @@ class AutoSetVolume(MycroftSkill):
     def handle_volume_set_auto(self, message):
         self.speak_dialog('messure.lowlevel')
         wait_while_speaking()
+        self.autovolume = False
         count = 0
         messure_thresh = 0
         timeout = time.time() + 20   # 5 minutes from now
@@ -72,7 +73,7 @@ class AutoSetVolume(MycroftSkill):
         self.settings['LowNoice'] = messure_thresh + ((30 * messure_thresh) / 100)
         self.log.info("Setting LowNoice to: " + str(self.settings.get('LowNoice')))
         self.speak_dialog('messure.ok')  
-        
+        self.autovolume = True
         
 
     def auto_set_volume(self, message):
