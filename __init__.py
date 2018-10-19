@@ -90,10 +90,10 @@ class AutoSetVolume(MycroftSkill):
                     meter_thresh = int(float(parts[-1]))
                     #meter_cur = float(parts[-2].split(" ")[0])
                     
-                    lowlevel = self.settings.get('LowNoice') + int((30 * self.settings.get('LowNoice')) / 100)
+                    #lowlevel = self.settings.get('LowNoice') + int((30 * self.settings.get('LowNoice')) / 100)
                     
                     volume = 50
-                    if meter_thresh < lowlevel:
+                    if meter_thresh < self.settings.get('LowNoice'):
                         volume = self.settings.get('Low volume')
                     else:
                         volume = self.settings.get('Normal volume')
