@@ -33,9 +33,41 @@ class AutoSetVolume(MycroftSkill):
 
     @intent_file_handler('reset.intent')
     def handle_volume_set_auto(self, message):
-        self.settings['HighNoice'] = None
-        self.settings['LowNoice'] = None
-        self.speak_dialog('reset.volume.set.auto')   
+        timeout = time.time() + 60*1   # 5 minutes from now
+        self.speak_dialog('messure.lowlevel')
+        while True:
+            if time.time() > timeout:
+                break
+                with io.open(self.filename, 'r') as fh:
+                    #fh.seek(0)
+                    meter_thresh = 0
+                    while True:
+                        line = fh.readline()
+                        if line == "":
+                            break
+                        # Ex:Energy:  cur=4 thresh=1.5
+                        parts = line.split("=")
+                        meter_thresh = (meter_thresh + int(float(parts[-1]))) /2
+        self.settings['LowNoice'] = meter_thresh
+        self.speak_dialog('messure.ok')  
+        
+        self.speak_dialog('messure.highlevel')
+        while True:
+            if time.time() > timeout:
+                break
+                with io.open(self.filename, 'r') as fh:
+                    #fh.seek(0)
+                    meter_thresh = 0
+                    while True:
+                        line = fh.readline()
+                        if line == "":
+                            break
+                        # Ex:Energy:  cur=4 thresh=1.5
+                        parts = line.split("=")
+                        meter_thresh = (meter_thresh + int(float(parts[-1]))) /2
+        self.settings['HighNoice'] = meter_thresh
+        self.speak_dialog('messure.ok')  
+
 
     def auto_set_volume(self, message):
         wait_while_speaking()
@@ -53,16 +85,16 @@ class AutoSetVolume(MycroftSkill):
                 meter_thresh = int(float(parts[-1]))
                 #meter_cur = float(parts[-2].split(" ")[0])
                 
-                # Store the thresh level
-                if self.settings.get('HighNoice') == None:
-                    self.settings['HighNoice'] = meter_thresh
-                if self.settings.get('LowNoice') == None:
-                    self.settings['LowNoice'] = meter_thresh
+            #    # Store the thresh level
+            #    if self.settings.get('HighNoice') == None:
+            #        self.settings['HighNoice'] = meter_thresh
+            #    if self.settings.get('LowNoice') == None:
+            #        self.settings['LowNoice'] = meter_thresh
                 
-                if meter_thresh > self.settings.get('HighNoice'):
-                    self.settings['HighNoice'] = meter_thresh
-                elif meter_thresh < self.settings.get('LowNoice'):
-                    self.settings['LowNoice'] = meter_thresh
+            #    if meter_thresh > self.settings.get('HighNoice'):
+            #        self.settings['HighNoice'] = meter_thresh
+            #    elif meter_thresh < self.settings.get('LowNoice'):
+            #        self.settings['LowNoice'] = meter_thresh
                 
                 # Calculate high and low levels
                 # return 100 * float(part)/float(whole)
@@ -70,10 +102,10 @@ class AutoSetVolume(MycroftSkill):
                 range = self.settings.get('HighNoice') - self.settings.get('LowNoice')
                 lowlevel = self.settings.get('LowNoice') + int((10 * range) / 100)
                 highlevel = self.settings.get('HighNoice') - int((20 * range) /100)
-                self.log.info("LovNoice: " + str(self.settings.get('LowNoice')) + 
-                              " LowLevel: " + str(lowlevel) + 
-                              " HighNoice :" + str(self.settings.get('HighNoice')) + 
-                              " HighLevel: " + str(highlevel))
+            #    self.log.info("LovNoice: " + str(self.settings.get('LowNoice')) + 
+            #                  " LowLevel: " + str(lowlevel) + 
+            #                  " HighNoice :" + str(self.settings.get('HighNoice')) + 
+            #                  " HighLevel: " + str(highlevel))
 
                 if not self.audio_service.is_playing:
                     volume = 50
@@ -84,7 +116,7 @@ class AutoSetVolume(MycroftSkill):
                     if meter_thresh < highlevel and meter_thresh > lowlevel:
                         volume = self.settings.get('Normal volume')
                     self.log.info("Mesure mic: " + str(meter_thresh) + " Setting volume to :" + str(volume) + "%")
-                    self.log.info(line)
+                    #self.log.info(line)
                     self.mixer.setvolume(volume)
 
                 
