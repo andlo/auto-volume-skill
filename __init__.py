@@ -20,12 +20,27 @@ class AutoSetVolume(MycroftSkill):
         self.mixer = Mixer()
         self.schedule_repeating_event(self.auto_set_volume, None,15, 'AutoSetVolume')
 
+        self.autovolume = True
         if self.settings.get('High volume') == None:
             self.settings['High volume'] = 75
         if self.settings.get('Normal volume') == None:
             self.settings['Normal volume'] = 60
         if self.settings.get('Low volume') == None:
             self.settings['Low volume'] = 35
+
+        self.add_event('recognizer_loop:record_begin',  
+                    self.handle_listener_started)  
+        self.add_event('recognizer_loop:record_end',  
+                    self.handle_listener_ended)
+
+    def handle_listener_started(self, message):  
+        # code to excecute when active listening begins...
+        self.autovolume = False
+
+    def handle_listener_ended(self, message):  
+        # code to excecute when active listening begins...  
+        time.sleep(5)
+        self.autovolume = True
                    
 
     @intent_file_handler('volume.set.auto.intent')
@@ -42,7 +57,6 @@ class AutoSetVolume(MycroftSkill):
             if time.time() > timeout:
                 break
             with io.open(self.filename, 'r') as fh:
-                #fh.seek(0)
                 while True:
                     line = fh.readline()
                     if line == "":
@@ -51,65 +65,36 @@ class AutoSetVolume(MycroftSkill):
                     parts = line.split("=")
                     messure_thresh = messure_thresh + int(float(parts[-1]))
                     count = count + 1
-                    # self.settings['LowNoice'] = (self.settings['LowNoice'] + int(float(parts[-1]))) /2
                     self.log.info(line + " ==== " +str(count))
             time.sleep(1)
-        self.settings['LowNoice'] = messure_thresh / count
+        self.settings['LowNoice'] = (30 * (messure_thresh / count) / 100)
         self.log.info("Setting LowNoice to: " + str(self.settings.get('LowNoice')))
         self.speak_dialog('messure.ok')  
         
         
 
     def auto_set_volume(self, message):
-        wait_while_speaking()
-        #global meter_thresh
-        
-        with io.open(self.filename, 'r') as fh:
-            #fh.seek(0)
-            while True:
-                line = fh.readline()
-                if line == "":
-                    break
+        if self.autovolume = True and not self.audio_service.is_playing:
+            wait_while_speaking()
+            with io.open(self.filename, 'r') as fh:
+                while True:
+                    line = fh.readline()
+                    if line == "":
+                        break
 
-                # Ex:Energy:  cur=4 thresh=1.5
-                parts = line.split("=")
-                meter_thresh = int(float(parts[-1]))
-                #meter_cur = float(parts[-2].split(" ")[0])
-                
-            #    # Store the thresh level
-            #    if self.settings.get('HighNoice') == None:
-            #        self.settings['HighNoice'] = meter_thresh
-            #    if self.settings.get('LowNoice') == None:
-            #        self.settings['LowNoice'] = meter_thresh
-                
-            #    if meter_thresh > self.settings.get('HighNoice'):
-            #        self.settings['HighNoice'] = meter_thresh
-            #    elif meter_thresh < self.settings.get('LowNoice'):
-            #        self.settings['LowNoice'] = meter_thresh
-                
-                # Calculate high and low levels
-                # return 100 * float(part)/float(whole)
-                #  return (percent * whole) / 100.0
-                range = self.settings.get('HighNoice') - self.settings.get('LowNoice')
-                #lowlevel = self.settings.get('LowNoice') + int((10 * range) / 100)
-                lowlevel = self.settings.get('LowNoice') + int((10 * self.settings.get('LowNoice')) / 100)
-                
-            #    highlevel = self.settings.get('HighNoice') - int((20 * range) /100)
-            #    self.log.info("LovNoice: " + str(self.settings.get('LowNoice')) + 
-            #                  " LowLevel: " + str(lowlevel) + 
-            #                  " HighNoice :" + str(self.settings.get('HighNoice')) + 
-            #                  " HighLevel: " + str(highlevel))
-
-                if not self.audio_service.is_playing:
+                    # Ex:Energy:  cur=4 thresh=1.5
+                    parts = line.split("=")
+                    meter_thresh = int(float(parts[-1]))
+                    #meter_cur = float(parts[-2].split(" ")[0])
+                    
+                    lowlevel = self.settings.get('LowNoice') + int((30 * self.settings.get('LowNoice')) / 100)
+                    
                     volume = 50
-                #    if meter_thresh > highlevel:
-                #        volume = self.settings.get('High volume')
                     if meter_thresh < lowlevel:
                         volume = self.settings.get('Low volume')
                     else:
                         volume = self.settings.get('Normal volume')
                     self.log.info("Mesure mic: " + str(meter_thresh) + " Setting volume to :" + str(volume) + "%")
-                    #self.log.info(line)
                     self.mixer.setvolume(volume)
 
                 
