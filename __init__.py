@@ -49,7 +49,7 @@ class AutoSetVolume(MycroftSkill):
                             break
                         # Ex:Energy:  cur=4 thresh=1.5
                         parts = line.split("=")
-                        messure_thresh = messure_thresh + int(float(parts[-1])
+                        messure_thresh = messure_thresh + int(float(parts[-1]))
                         # self.settings['LowNoice'] = (self.settings['LowNoice'] + int(float(parts[-1]))) /2
                         self.log.info(line + str(count))
         self.settings['LowNoice'] = messure_thresh / count
