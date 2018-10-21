@@ -88,9 +88,9 @@ class AutoSetVolume(MycroftSkill):
             else:
                 volume = self.settings.get('Normal volume')
             self.log.info("Mesure mic: " + str(self.meter_thresh) + " Setting volume to :" + str(volume) + "%")
-            try:
+            If not volume = None:
                 self.mixer.setvolume(volume)
-                pass
+
  
             
 def create_skill():
