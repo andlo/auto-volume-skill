@@ -67,8 +67,8 @@ class AutoSetVolume(MycroftSkill):
                     #meter_cur = float(parts[-2].split(" ")[0])
                     
                     self.log.info("Mesure mic: " + str(meter_thresh))
-                    self.log.info("Meter low: " + str(self.meter_low))
-                    self.log.info("Meter high: " + str(self.meter_high))
+                    self.log.info("Meter low: " + str(self.meter_low) + str( self.meter_low + ((30 * self.meter_low) / 100)))
+                    self.log.info("Meter high: " + str(self.meter_high)+ str(self.meter_high - ((10 * self.meter_high) / 100)))
                     
                     self.meter_thresh_list.append(meter_thresh)
                     if len(self.meter_thresh_list) > 60:
