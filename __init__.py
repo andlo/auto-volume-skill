@@ -19,7 +19,7 @@ class AutoSetVolume(MycroftSkill):
         self.audio_service = AudioService(self.bus)
         self.mixer = Mixer()
         self.schedule_repeating_event(self.auto_set_volume, None,5, 'AutoSetVolume')
-        self.schedule_repeating_event(self.mesure_mic_thresh, None,10, 'AutoSetVolume_messure')
+        self.schedule_repeating_event(self.mesure_mic_thresh, None,1, 'AutoSetVolume_messure')
 
         self.autovolume = True
         if self.settings.get('High volume') == None:
