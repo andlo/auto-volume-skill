@@ -82,32 +82,26 @@ class AutoSetVolume(MycroftSkill):
                     parts = line.split("=")
                     meter_thresh = float(parts[-1])
                     #meter_cur = float(parts[-2].split(" ")[0])
-                    
-                    #self.log.info("Mesure mic: " + str(meter_thresh))
-                    #self.log.info("Meter low: " + str(self.meter_low) + " level: " + str( self.meter_low + ((30 * self.meter_low) / 100)))
-                    #self.log.info("Meter high: " + str(self.meter_high) + " level: " + str(self.meter_high - ((10 * self.meter_high) / 100)))
-                    #self.log.info("meter_thresh_list: " + str(len(self.meter_thresh_list)))  
-
+   
                     self.settings['Messurement list'].append(meter_thresh)
-                    if len(self.meter_thresh_list) > 120:
-                        self.meter_thresh_list.pop(1)
-                    self.meter_thresh = sum(self.meter_thresh_list) / float(len(self.meter_thresh_list))  
+                    if len(self.settings.get('Messurement list')) > 120:
+                        self.settings['Messurement list'].pop(1)
+                    self.meter_thresh = sum(self.settings.get('Messurement list') / float(len(self.settings.get('Messurement list'))  
                                         
-                    if self.meter_thresh < self.meter_low:
-                        self.meter_low = self.meter_thresh
-                    if self.meter_thresh > self.meter_high:
-                        self.meter_high = self.meter_thresh
-                    
-
-
+                    if self.meter_thresh < self.settings.get('Lowest messurement'):
+                        self.settings['Lowest messurement'] = self.meter_thresh
+                    if self.meter_thresh > self.settings.get('Highest messurement'):
+                        self.settings['Highest messurement'] = self.meter_thresh
+   
+   
     def auto_set_volume(self, message):
-        if len(self.meter_thresh_list) == 120:
+        if len(self.settings.get('Messurement list')) == 120:
             if self.autovolume and not self.audio_service.is_playing:
                 wait_while_speaking()
                 volume = self.settings.get('Normal volume')
-                if self.meter_thresh > self.meter_high - ((10 * self.meter_high) / 100):
+                if self.meter_thresh > self.settings.get('Highest messurement') - ((10 * self.settings.get('Highest messurement')) / 100):
                     volume = self.settings.get('High volume')
-                if self.meter_thresh < self.meter_low + ((30 * self.meter_low) / 100):
+                if self.meter_thresh < self.settings.get('Lowest messurement') + ((30 * self.settings.get('Lowest messurement')) / 100):
                     volume = self.settings.get('Low volume')
                 self.log.info("Mesure mic: " + str(self.meter_thresh) + 
                               " Setting volume to :" + str(volume) + "%" + 
@@ -116,8 +110,6 @@ class AutoSetVolume(MycroftSkill):
                     self.mixer.setvolume(volume)
         else:
             self.log.info("Running initial messurement. ") 
-            self.log.info("Meter low: " + str(self.meter_low) + " level: " + str( self.meter_low + ((30 * self.meter_low) / 100)))
-            self.log.info("Meter high: " + str(self.meter_high) + " level: " + str(self.meter_high - ((10 * self.meter_high) / 100)))
             self.log.info("meter_thresh_list: " + str(len(self.meter_thresh_list)))  
 
 
