@@ -83,6 +83,7 @@ class AutoSetVolume(MycroftSkill):
                     self.meter_thresh_list.append(meter_thresh)
                     if len(self.meter_thresh_list) > 120:
                         self.meter_thresh_list.pop(1)
+                        self.log.info("popping one from meter_thresh_list " + str(len(self.meter_thresh_list)))
                     self.meter_thresh = sum(self.meter_thresh_list) / float(len(self.meter_thresh_list))                         
                     if self.meter_thresh < self.meter_low:
                         self.meter_low = self.meter_thresh
