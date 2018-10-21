@@ -109,7 +109,6 @@ class AutoSetVolume(MycroftSkill):
                     self.mixer.setvolume(volume)
         else:
             self.log.info("Running initial messurement. " + str(len(self.meter_thresh_list)))
-            self.log.info("Mesure mic: " + str(meter_thresh))
             self.log.info("Meter low: " + str(self.meter_low) + " level: " + str( self.meter_low + ((30 * self.meter_low) / 100)))
             self.log.info("Meter high: " + str(self.meter_high) + " level: " + str(self.meter_high - ((10 * self.meter_high) / 100)))
             self.log.info("meter_thresh_list: " + str(len(self.meter_thresh_list)))  
