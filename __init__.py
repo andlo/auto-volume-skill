@@ -71,7 +71,7 @@ class AutoSetVolume(MycroftSkill):
                     self.log.info("Meter high: " + str(self.meter_high) + " level: " + str(self.meter_high - ((10 * self.meter_high) / 100)))
                     
                     self.meter_thresh_list.append(meter_thresh)
-                    if len(self.meter_thresh_list) > 60:
+                    if len(self.meter_thresh_list) > 120:
                         self.meter_thresh_list.pop(1)
                     self.meter_thresh = sum(self.meter_thresh_list) / float(len(self.meter_thresh_list))                         
                     if self.meter_thresh < self.meter_low:
