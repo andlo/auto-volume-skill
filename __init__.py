@@ -34,9 +34,19 @@ class AutoSetVolume(MycroftSkill):
         self.add_event('recognizer_loop:record_end',  
                     self.handle_listener_ended)
 
-        self.meter_thresh = 0 
-        self.meter_high = 5
-        self.meter_low = 5
+        wait_while_speaking()
+            with io.open(self.filename, 'r') as fh:
+                while True:
+                    line = fh.readline()
+                    if line == "":
+                        break
+                    # Ex:Energy:  cur=4 thresh=1.5
+                    parts = line.split("=")
+                    meter_thresh = float(parts[-1])
+
+        self.meter_thresh = 0
+        self.meter_high = meter_thresh
+        self.meter_low = meter_thresh
         self.meter_thresh_list = []
 
     def handle_listener_started(self, message):  
