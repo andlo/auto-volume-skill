@@ -19,6 +19,7 @@ class AutoSetVolume(MycroftSkill):
         self.audio_service = AudioService(self.bus)
         self.mixer = Mixer()
         self.schedule_repeating_event(self.auto_set_volume, None,5, 'AutoSetVolume')
+        self.schedule_repeating_event(self.mesure_mic_thresh, None,10, 'AutoSetVolume_messure')
 
         self.autovolume = True
         if self.settings.get('High volume') == None:
@@ -32,6 +33,11 @@ class AutoSetVolume(MycroftSkill):
                     self.handle_listener_started)  
         self.add_event('recognizer_loop:record_end',  
                     self.handle_listener_ended)
+
+        self.meter_thresh = 0 
+        self.meter_high = 0
+        self.meter_low = 0
+        self.meter_thresh_list = []
 
     def handle_listener_started(self, message):  
         # code to excecute when active listening begins...
@@ -47,36 +53,7 @@ class AutoSetVolume(MycroftSkill):
     def handle_volume_set_auto(self, message):
         self.speak_dialog('volume.set.auto')
 
-    @intent_file_handler('reset.intent')
-    def handle_volume_set_auto(self, message):
-        self.speak_dialog('messure.lowlevel')
-        wait_while_speaking()
-        self.autovolume = False
-        count = 0
-        messure_thresh = 0
-        timeout = time.time() + 20   # 5 minutes from now
-        while True:
-            if time.time() > timeout:
-                break
-            with io.open(self.filename, 'r') as fh:
-                while True:
-                    line = fh.readline()
-                    if line == "":
-                        break
-                    # Ex:Energy:  cur=4 thresh=1.5
-                    parts = line.split("=")
-                    messure_thresh = messure_thresh + int(float(parts[-1]))
-                    count = count + 1
-                    self.log.info(line + " ==== " +str(count))
-            time.sleep(1)
-        messure_thresh = messure_thresh / count
-        self.settings['LowNoice'] = messure_thresh + ((30 * messure_thresh) / 100)
-        self.log.info("Setting LowNoice to: " + str(self.settings.get('LowNoice')))
-        self.speak_dialog('messure.ok')  
-        self.autovolume = True
-        
-
-    def auto_set_volume(self, message):
+    def mesure_mic_thresh(self, message):
         if self.autovolume and not self.audio_service.is_playing:
             wait_while_speaking()
             with io.open(self.filename, 'r') as fh:
@@ -84,23 +61,35 @@ class AutoSetVolume(MycroftSkill):
                     line = fh.readline()
                     if line == "":
                         break
-
                     # Ex:Energy:  cur=4 thresh=1.5
                     parts = line.split("=")
-                    meter_thresh = int(float(parts[-1]))
+                    meter_thresh = float(parts[-1])
                     #meter_cur = float(parts[-2].split(" ")[0])
                     
-                    #lowlevel = self.settings.get('LowNoice') + int((30 * self.settings.get('LowNoice')) / 100)
+                    self.log.info("Mesure mic: " + str(meter_thresh))
+                    self.meter_thresh_list.append(meter_thresh)
+                    if len(self.meter_thresh_list) > 60:
+                        self.meter_thresh_list.pop(1)
+                    self.meter_thresh = sum(self.meter_thresh_list) / float(len(self.meter_thresh_list))                         
+                    if self.meter_thresh < self.meter_low:
+                        self.meter_low = self.meter_thresh
+                    if self.meter_thresh > self.meter_high:
+                        self.meter_high = self.meter_thresh
                     
-                    volume = 50
-                    if meter_thresh < self.settings.get('LowNoice'):
-                        volume = self.settings.get('Low volume')
-                    else:
-                        volume = self.settings.get('Normal volume')
-                    self.log.info("Mesure mic: " + str(meter_thresh) + " Setting volume to :" + str(volume) + "%")
-                    self.mixer.setvolume(volume)
 
-                
+
+    def auto_set_volume(self, message):
+        if self.autovolume and not self.audio_service.is_playing:
+            wait_while_speaking()
+            if self.meter_thresh < self.messure_low + ((30 * self.messure_thresh_low) / 100):
+                volume = self.settings.get('Low volume')
+            elif self.meter_thresh > self.messure_thresh_high - ((30 * self.messure_thresh_high) / 100):
+                volume = self.settings.get('high volume')
+            else
+                volume = self.settings.get('Normal volume')
+            self.log.info("Mesure mic: " + str(self.meter_thresh) + " Setting volume to :" + str(volume) + "%")
+            self.mixer.setvolume(volume)
+ 
             
 def create_skill():
     return AutoSetVolume()
