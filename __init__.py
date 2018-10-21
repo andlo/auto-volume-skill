@@ -108,7 +108,7 @@ class AutoSetVolume(MycroftSkill):
                 if not volume == None:  
                     self.mixer.setvolume(volume)
         else:
-            self.log.info("Running initial messurement. " + str(len(self.meter_thresh_list))
+            self.log.info("Running initial messurement. " + str(len(self.meter_thresh_list)))
             
 
  
