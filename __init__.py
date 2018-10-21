@@ -88,7 +88,7 @@ class AutoSetVolume(MycroftSkill):
                         self.settings['Messurement list'].pop(1)
                     
                     l = self.settings.get('Messurement list')
-                    self.meter_thresh = sum(l) / float(len(l)))  
+                    self.meter_thresh = sum(l) / float(len(l))  
                                         
                     if self.meter_thresh < self.settings.get('Lowest messurement'):
                         self.settings['Lowest messurement'] = self.meter_thresh
