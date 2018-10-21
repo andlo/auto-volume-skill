@@ -43,7 +43,14 @@ class AutoSetVolume(MycroftSkill):
                 # Ex:Energy:  cur=4 thresh=1.5
                 parts = line.split("=")
                 meter_thresh = float(parts[-1])
-
+        
+        if self.settings.get('Highest messurement') == None:
+            self.settings['Highest messurement'] = meter_thresh
+        if self.settings.get('Lowest messurement') == None:
+            self.settings['Lowest messurement'] = meter_thresh
+        if self.settings.get('Messurement list') == None:
+            self.settings['Messurement list'] = []
+        
         self.meter_thresh = 0
         self.meter_high = meter_thresh
         self.meter_low = meter_thresh
@@ -81,7 +88,7 @@ class AutoSetVolume(MycroftSkill):
                     #self.log.info("Meter high: " + str(self.meter_high) + " level: " + str(self.meter_high - ((10 * self.meter_high) / 100)))
                     #self.log.info("meter_thresh_list: " + str(len(self.meter_thresh_list)))  
 
-                    self.meter_thresh_list.append(meter_thresh)
+                    self.settings['Messurement list'].append(meter_thresh)
                     if len(self.meter_thresh_list) > 120:
                         self.meter_thresh_list.pop(1)
                     self.meter_thresh = sum(self.meter_thresh_list) / float(len(self.meter_thresh_list))  
@@ -108,7 +115,7 @@ class AutoSetVolume(MycroftSkill):
                 if not volume == None:  
                     self.mixer.setvolume(volume)
         else:
-            self.log.info("Running initial messurement. " + str(len(self.meter_thresh_list)))
+            self.log.info("Running initial messurement. ") 
             self.log.info("Meter low: " + str(self.meter_low) + " level: " + str( self.meter_low + ((30 * self.meter_low) / 100)))
             self.log.info("Meter high: " + str(self.meter_high) + " level: " + str(self.meter_high - ((10 * self.meter_high) / 100)))
             self.log.info("meter_thresh_list: " + str(len(self.meter_thresh_list)))  
