@@ -35,14 +35,14 @@ class AutoSetVolume(MycroftSkill):
                     self.handle_listener_ended)
 
         wait_while_speaking()
-            with io.open(self.filename, 'r') as fh:
-                while True:
-                    line = fh.readline()
-                    if line == "":
-                        break
-                    # Ex:Energy:  cur=4 thresh=1.5
-                    parts = line.split("=")
-                    meter_thresh = float(parts[-1])
+        with io.open(self.filename, 'r') as fh:
+            while True:
+                line = fh.readline()
+                if line == "":
+                    break
+                # Ex:Energy:  cur=4 thresh=1.5
+                parts = line.split("=")
+                meter_thresh = float(parts[-1])
 
         self.meter_thresh = 0
         self.meter_high = meter_thresh
