@@ -7,7 +7,6 @@
                 "fields": [
                     {
                         "name": "High volume",
-                        "type": "integer",
                         "label": "High volume",
                         "value": "75"
                     }
@@ -15,7 +14,6 @@
                 "fields": [
                     {
                         "name": "Normal volume",
-                        "type": "integer",
                         "label": "Normal volume",
                         "value": "60"
                     }
@@ -23,7 +21,6 @@
                 "fields": [
                     {
                         "name": "Low volume",
-                        "type": "integer",
                         "label": "Low volume",
                         "value": "35"
                     }
