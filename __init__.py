@@ -113,8 +113,8 @@ class AutoSetVolume(MycroftSkill):
                 self.volume = volume
                 self.log.info("Mic thresh: " + str(self.meter_thresh) + 
                             " Low level: " + str(low_level) +
-                            " High level: " + str(high_level)
-                self.log.info("Setting volume to :" + str(volume)   + "%")
+                            " High level: " + str(high_level))
+                self.log.info("Setting volume to :" + str(volume)  + "%")
     
 
  
