@@ -105,7 +105,7 @@ class AutoSetVolume(MycroftSkill):
 
             if self.meter_thresh > high_level:
                 volume = self.settings.get('High volume')
-            if self.meter_thresh < lov_level:
+            if self.meter_thresh < low_level:
                 volume = self.settings.get('Low volume')
 
             if volume != self.volume and volume != None:  
