@@ -93,6 +93,7 @@ class AutoSetVolume(MycroftSkill):
                     if self.meter_thresh > self.settings.get('Highest messurement'):
                         self.settings['Highest messurement'] = self.meter_thresh
                     
+                    range = self.settings.get('Highest messurement') - self.settings.get('Lowest messurement')
                     high = self.settings.get('Highest messurement') - ((10 * range) / 100)
                     low = self.settings.get('Lowest messurement') + ((30 * range) / 100)
                     self.log.info("Lowlevel: " + str(low) + " highlevel: " + str(high))
