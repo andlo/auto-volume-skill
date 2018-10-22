@@ -92,35 +92,30 @@ class AutoSetVolume(MycroftSkill):
                         self.settings['Lowest messurement'] = self.meter_thresh
                     if self.meter_thresh > self.settings.get('Highest messurement'):
                         self.settings['Highest messurement'] = self.meter_thresh
-                    
-                    range = self.settings.get('Highest messurement') - self.settings.get('Lowest messurement')
-                    high = float(self.settings.get('Highest messurement')) - ((10 * float(range)) / 100)
-                    low = float(self.settings.get('Lowest messurement')) + ((10 * float(range)) / 100)
-                    self.log.info("Lowlevel: " + str(low) + " highlevel: " + str(high))
-                    self.log.info("Mesure mic: " + str(self.meter_thresh))   
 
     def auto_set_volume(self, message):
-        if len(self.meter_thresh_list) > 60:
-            if self.autovolume and not self.audio_service.is_playing:
-                wait_while_speaking()
+        #if len(self.meter_thresh_list) > 60:
+        if self.autovolume and not self.audio_service.is_playing:
+            wait_while_speaking()
 
-                range = self.settings.get('Highest messurement') - self.settings.get('Lowest messurement')
-                volume = self.settings.get('Normal volume')
+            volume = self.settings.get('Normal volume')
+            range = self.settings.get('Highest messurement') - self.settings.get('Lowest messurement')
+            high_level = self.settings.get('Highest messurement') - ((10 * range) / 100)
+            low_level = self.settings.get('Lowest messurement') + ((10 * range) / 100)
 
-                if self.meter_thresh > self.settings.get('Highest messurement') - ((10 * range) / 100):
-                    volume = self.settings.get('High volume')
-                if self.meter_thresh < self.settings.get('Lowest messurement') + ((10 * range) / 100):
-                    volume = self.settings.get('Low volume')
+            if self.meter_thresh > high_level:
+                volume = self.settings.get('High volume')
+            if self.meter_thresh < lov_level:
+                volume = self.settings.get('Low volume')
 
-                if volume != self.volume and volume != None:  
-                    self.mixer.setvolume(volume)
-                    self.volume = volume
-                    self.log.info("Mesure mic: " + str(self.meter_thresh) + 
-                              " Setting volume to :" + str(volume) + "%")
-        else:
-            self.log.info("Running initial messurement. ") 
-            self.log.info("meter_thresh_list: " + str(len(self.meter_thresh_list)))  
-
+            if volume != self.volume and volume != None:  
+                self.mixer.setvolume(volume)
+                self.volume = volume
+                self.log.info("Mic thresh: " + str(self.meter_thresh) + 
+                            " Low level: " + str(low_level) +
+                            " High level: " + str(high_level)
+                self.log.info("Setting volume to :" + str(volume)   + "%")
+    
 
  
             
