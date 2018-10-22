@@ -51,6 +51,7 @@ class AutoSetVolume(MycroftSkill):
         if self.settings.get('Messurement list') == None:
             self.settings['Messurement list'] = []
         
+        self.volume = self.settings.get('Low volume')
         self.meter_thresh = 0
         self.meter_high = meter_thresh
         self.meter_low = meter_thresh
@@ -100,16 +101,21 @@ class AutoSetVolume(MycroftSkill):
         if len(self.settings.get('Messurement list')) == 120:
             if self.autovolume and not self.audio_service.is_playing:
                 wait_while_speaking()
+
+                range = self.settings.get('Highest messurement') - self.settings.get('Lowest messurement')
                 volume = self.settings.get('Normal volume')
-                if self.meter_thresh > self.settings.get('Highest messurement') - ((10 * self.settings.get('Highest messurement')) / 100):
+
+                if self.meter_thresh > self.settings.get('Highest messurement') - ((10 * range) / 100):
                     volume = self.settings.get('High volume')
-                if self.meter_thresh < self.settings.get('Lowest messurement') + ((30 * self.settings.get('Lowest messurement')) / 100):
+                if self.meter_thresh < self.settings.get('Lowest messurement') + ((30 * range) / 100):
                     volume = self.settings.get('Low volume')
+
                 self.log.info("Mesure mic: " + str(self.meter_thresh) + 
                               " Setting volume to :" + str(volume) + "%" + 
-                              " from " + str(self.mixer.getvolume()) + "%")
-                if not volume == None:  
+                              " from " + str(self.mixer.getvolume(1)) + "%")
+                if volume <> self.volume and volume not == None:  
                     self.mixer.setvolume(volume)
+                    self.volume = volume
         else:
             self.log.info("Running initial messurement. ") 
             self.log.info("meter_thresh_list: " + str(len(self.settings.get('Messurement list'))))  
