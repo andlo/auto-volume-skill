@@ -114,7 +114,7 @@ class AutoSetVolume(MycroftSkill):
                               " Setting volume to :" + str(volume) + "%")
         else:
             self.log.info("Running initial messurement. ") 
-            self.log.info("meter_thresh_list: " + str(len(self.settings.get('Messurement list'))))  
+            self.log.info("meter_thresh_list: " + str(len(self.meter_thresh_list)))  
 
 
  
