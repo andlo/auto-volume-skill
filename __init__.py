@@ -95,7 +95,7 @@ class AutoSetVolume(MycroftSkill):
    
 
     def auto_set_volume(self, message):
-        if len(self.meter_thresh_list) == 30:
+        if len(self.meter_thresh_list) > 60:
             if self.autovolume and not self.audio_service.is_playing:
                 wait_while_speaking()
 
