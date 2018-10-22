@@ -10,7 +10,7 @@ import os.path
 import time
 
  
-class AutoSetVolume(MycroftSkill):
+class AutoVolume(MycroftSkill):
     def __init__(self):
         MycroftSkill.__init__(self)
     
@@ -18,8 +18,8 @@ class AutoSetVolume(MycroftSkill):
         self.filename = os.path.join(get_ipc_directory(), "mic_level")
         self.audio_service = AudioService(self.bus)
         self.mixer = Mixer()
-        self.schedule_repeating_event(self.auto_set_volume, None,5, 'AutoSetVolume')
-        self.schedule_repeating_event(self.mesure_mic_thresh, None,1, 'AutoSetVolume_messure')
+        self.schedule_repeating_event(self.auto_set_volume, None,5, 'AutoVolume')
+        self.schedule_repeating_event(self.mesure_mic_thresh, None,1, 'AutoVolume_messure')
 
         self.autovolume = True
         if self.settings.get('High volume') == None:
@@ -119,5 +119,5 @@ class AutoSetVolume(MycroftSkill):
                 self.log.info("Setting volume to :" + str(volume)  + "%")
     
 def create_skill():
-    return AutoSetVolume()
+    return AutoVolume()
 
