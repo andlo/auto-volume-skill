@@ -86,8 +86,7 @@ class AutoSetVolume(MycroftSkill):
                     if len(self.meter_thresh_list) > 120:
                         self.meter_thresh_list.pop(1)
                     
-                    l = self.settings.get('Messurement list')
-                    self.meter_thresh = sum(l) / float(len(l))  
+                    self.meter_thresh = sum(self.meter_thresh_list) / float(len(self.meter_thresh_list))  
                                         
                     if self.meter_thresh < self.settings.get('Lowest messurement'):
                         self.settings['Lowest messurement'] = self.meter_thresh
@@ -96,7 +95,7 @@ class AutoSetVolume(MycroftSkill):
    
 
     def auto_set_volume(self, message):
-        if len(self.settings.get('Messurement list')) == 120:
+        if len(self.meter_thresh_list) == 120:
             if self.autovolume and not self.audio_service.is_playing:
                 wait_while_speaking()
 
