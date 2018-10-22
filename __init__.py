@@ -95,7 +95,7 @@ class AutoSetVolume(MycroftSkill):
    
 
     def auto_set_volume(self, message):
-        if len(self.meter_thresh_list) == 120:
+        if len(self.meter_thresh_list) == 30:
             if self.autovolume and not self.audio_service.is_playing:
                 wait_while_speaking()
 
@@ -112,7 +112,7 @@ class AutoSetVolume(MycroftSkill):
                     self.volume = volume
                     high = self.settings.get('Highest messurement') - ((10 * range) / 100)
                     low = self.settings.get('Lowest messurement') + ((30 * range) / 100)
-                    self.log.info("Lowlevel: " + low + " highlevel: " + high)
+                    self.log.info("Lowlevel: " + str(low )+ " highlevel: " + str(high)
                     self.log.info("Mesure mic: " + str(self.meter_thresh) + 
                               " Setting volume to :" + str(volume) + "%")
         else:
