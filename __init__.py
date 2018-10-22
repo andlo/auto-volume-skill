@@ -92,7 +92,11 @@ class AutoSetVolume(MycroftSkill):
                         self.settings['Lowest messurement'] = self.meter_thresh
                     if self.meter_thresh > self.settings.get('Highest messurement'):
                         self.settings['Highest messurement'] = self.meter_thresh
-   
+                    
+                    high = self.settings.get('Highest messurement') - ((10 * range) / 100)
+                    low = self.settings.get('Lowest messurement') + ((30 * range) / 100)
+                    self.log.info("Lowlevel: " + str(low) + " highlevel: " + str(high))
+                    self.log.info("Mesure mic: " + str(self.meter_thresh)   
 
     def auto_set_volume(self, message):
         if len(self.meter_thresh_list) > 60:
