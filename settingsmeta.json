@@ -10,14 +10,14 @@
                         "label": "High volume",
                         "value": "75"
                     }
-                ]
+                ],
                 "fields": [
                     {
                         "name": "Normal volume",
                         "label": "Normal volume",
                         "value": "60"
                     }
-                ]
+                ],
                 "fields": [
                     {
                         "name": "Low volume",
@@ -25,7 +25,7 @@
                         "value": "35"
                     }
                 ]
-            },
+            }
         ]
     }
 }
