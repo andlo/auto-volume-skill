@@ -8,6 +8,7 @@
                     {
                         "name": "High volume",
                         "label": "High volume",
+                        "type": "number",
                         "value": "75"
                     }
                 ],
@@ -15,6 +16,7 @@
                     {
                         "name": "Normal volume",
                         "label": "Normal volume",
+                        "type": "number",
                         "value": "60"
                     }
                 ],
@@ -22,6 +24,7 @@
                     {
                         "name": "Low volume",
                         "label": "Low volume",
+                        "type": "number",
                         "value": "35"
                     }
                 ]

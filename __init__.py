@@ -57,18 +57,21 @@ class AutoSetVolume(MycroftSkill):
         self.meter_thresh_list.append(meter_thresh)
 
     def handle_listener_started(self, message):  
-        # code to excecute when active listening begins...
         self.autovolume = False
 
     def handle_listener_ended(self, message):  
-        # code to excecute when active listening begins...  
         time.sleep(5)
         self.autovolume = True
                    
-
-    @intent_file_handler('volume.set.auto.intent')
-    def handle_volume_set_auto(self, message):
-        self.speak_dialog('volume.set.auto')
+    @intent_file_handler('activate.intent')
+    def handle_activate(self, message):
+        self.autovolume = True
+        self.speak_dialog("activate")
+        
+    @intent_file_handler('deactivate.intent')
+    def handle_deactivate(self, message):
+        self.autovolume = False
+        self.speak_dialog("deactivate")
 
     def mesure_mic_thresh(self, message):
         if self.autovolume and not self.audio_service.is_playing:
@@ -81,7 +84,6 @@ class AutoSetVolume(MycroftSkill):
                     # Ex:Energy:  cur=4 thresh=1.5
                     parts = line.split("=")
                     meter_thresh = float(parts[-1])
-                    #meter_cur = float(parts[-2].split(" ")[0])
    
                     self.meter_thresh_list.append(meter_thresh)
                     if len(self.meter_thresh_list) > 120:
@@ -95,7 +97,6 @@ class AutoSetVolume(MycroftSkill):
                         self.settings['Highest messurement'] = self.meter_thresh
 
     def auto_set_volume(self, message):
-        #if len(self.meter_thresh_list) > 60:
         if self.autovolume and not self.audio_service.is_playing:
             wait_while_speaking()
 
@@ -117,9 +118,6 @@ class AutoSetVolume(MycroftSkill):
                             " High level: " + str(high_level))
                 self.log.info("Setting volume to :" + str(volume)  + "%")
     
-
- 
-            
 def create_skill():
     return AutoSetVolume()
 
