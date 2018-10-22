@@ -53,7 +53,7 @@ class AutoSetVolume(MycroftSkill):
         self.meter_thresh = 0
         self.meter_high = meter_thresh
         self.meter_low = meter_thresh
-        self.meter_thresh_list = []
+        self.meter_thresh_list = [meter_thresh]
 
     def handle_listener_started(self, message):  
         # code to excecute when active listening begins...
