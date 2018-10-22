@@ -110,7 +110,7 @@ class AutoSetVolume(MycroftSkill):
                 volume = self.settings.get('Low volume')
 
             if volume != self.volume and volume != None:  
-                self.mixer.setvolume(volume)
+                self.mixer.setvolume(int(volume)
                 self.volume = volume
                 self.log.info("Mic thresh: " + str(self.meter_thresh) + 
                             " Low level: " + str(low_level) +
