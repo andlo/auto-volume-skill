@@ -49,7 +49,7 @@ class AutoSetVolume(MycroftSkill):
         if self.settings.get('Lowest messurement') == None:
             self.settings['Lowest messurement'] = meter_thresh
         
-        self.volume = self.settings.get('Low volume')
+        self.volume = int(self.settings.get('Low volume'))
         self.meter_thresh = 0
         self.meter_high = meter_thresh
         self.meter_low = meter_thresh
