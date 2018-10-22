@@ -99,7 +99,7 @@ class AutoSetVolume(MycroftSkill):
         if self.autovolume and not self.audio_service.is_playing:
             wait_while_speaking()
 
-            volume = self.settings.get('Normal volume')
+            volume = int(self.settings.get('Normal volume'))
             range = self.settings.get('Highest messurement') - self.settings.get('Lowest messurement')
             high_level = self.settings.get('Highest messurement') - ((10 * range) / 100)
             low_level = self.settings.get('Lowest messurement') + ((10 * range) / 100)
