@@ -3,38 +3,32 @@
     "skillMetadata": {
         "sections": [
             {
-                "name": "Options << Name of section",
+                "name": "Volume settings",
                 "fields": [
                     {
-                        "name": "internal_python_variable_name",
-                        "type": "text",
-                        "label": "Setting Friendly Display Name",
-                        "value": "",
-                        "placeholder": "demo prompt in the input box"
+                        "name": "High volume",
+                        "type": "integer",
+                        "label": "High volume",
+                        "value": "75"
+                    }
+                ]
+                "fields": [
+                    {
+                        "name": "Normal volume",
+                        "type": "integer",
+                        "label": "Normal volume",
+                        "value": "60"
+                    }
+                ]
+                "fields": [
+                    {
+                        "name": "Low volume",
+                        "type": "integer",
+                        "label": "Low volume",
+                        "value": "35"
                     }
                 ]
             },
-            {
-                "name": "Login << Name of another section",
-                "fields": [
-                    {
-                        "type": "label",
-                        "label": "Just a little bit of extra info for the user to understand following settings"
-                    },
-                    {
-                        "name": "username",
-                        "type": "text",
-                        "label": "Username",
-                        "value": ""
-                    },
-                    {
-                        "name": "password",
-                        "type": "password",
-                        "label": "Password",
-                        "value": ""
-                    }
-                ]
-            }
         ]
     }
 }
