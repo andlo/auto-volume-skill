@@ -1,37 +1,31 @@
 {
-    "name": "Auto set volume",
+    "name": "Auto volume",
     "skillMetadata": {
         "sections": [
             {
-                "name": "Options << Name of section",
+                "name": "Volume settings",
                 "fields": [
                     {
-                        "name": "internal_python_variable_name",
-                        "type": "text",
-                        "label": "Setting Friendly Display Name",
-                        "value": "",
-                        "placeholder": "demo prompt in the input box"
+                        "name": "High volume",
+                        "label": "High volume",
+                        "type": "number",
+                        "value": "75"
                     }
-                ]
-            },
-            {
-                "name": "Login << Name of another section",
+                ],
                 "fields": [
                     {
-                        "type": "label",
-                        "label": "Just a little bit of extra info for the user to understand following settings"
-                    },
+                        "name": "Normal volume",
+                        "label": "Normal volume",
+                        "type": "number",
+                        "value": "60"
+                    }
+                ],
+                "fields": [
                     {
-                        "name": "username",
-                        "type": "text",
-                        "label": "Username",
-                        "value": ""
-                    },
-                    {
-                        "name": "password",
-                        "type": "password",
-                        "label": "Password",
-                        "value": ""
+                        "name": "Low volume",
+                        "label": "Low volume",
+                        "type": "number",
+                        "value": "35"
                     }
                 ]
             }
