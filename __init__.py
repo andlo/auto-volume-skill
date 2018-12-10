@@ -72,6 +72,29 @@ class AutoVolume(MycroftSkill):
         self.autovolume = False
         self.speak_dialog("deactivate")
 
+    @intent_file_handler('reset.intent')
+    def handle_reset(self, message):
+        self.speak_dialog("reset")
+        wait_while_speaking()
+        with io.open(self.filename, 'r') as fh:
+            while True:
+                line = fh.readline()
+                if line == "":
+                    break
+                # Ex:Energy:  cur=4 thresh=1.5
+                parts = line.split("=")
+                meter_thresh = float(parts[-1])
+
+        self.settings['Highest messurement'] = meter_thresh
+        self.settings['Lowest messurement'] = meter_thresh
+
+        self.volume = int(self.settings.get('Low volume'))
+        self.meter_thresh = 0
+        self.meter_high = meter_thresh
+        self.meter_low = meter_thresh
+        self.meter_thresh_list = []
+        self.meter_thresh_list.append(meter_thresh)
+
     def mesure_mic_thresh(self, message):
         if self.autovolume and not self.audio_service.is_playing:
             wait_while_speaking()
