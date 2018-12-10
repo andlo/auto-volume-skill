@@ -20,7 +20,7 @@ The skill can be activated og deactivatet by the command "Hey Mycroft, set auto 
 Andreas Lorensen (@andlo)
 
 ## Supported Devices
-platform_mark1 platform_mark2 platform_picroft platform_plasmoid
+platform_mark1 platform_picroft
 
 ## Category
 Daily
