@@ -45,11 +45,6 @@ class AutoVolume(MycroftSkill):
         if self.settings.get('Low volume') is None:
             self.settings['Low volume'] = 35
 
-        self.add_event('recognizer_loop:record_begin',
-                       self.handle_listener_started)
-        self.add_event('recognizer_loop:record_end',
-                       self.handle_listener_ended)
-
         wait_while_speaking()
         with io.open(self.filename, 'r') as fh:
             while True:
@@ -71,6 +66,13 @@ class AutoVolume(MycroftSkill):
         self.meter_low = meter_thresh
         self.meter_thresh_list = []
         self.meter_thresh_list.append(meter_thresh)
+
+        self.add_event('recognizer_loop:record_begin',
+                       self.handle_listener_started)
+        self.add_event('recognizer_loop:record_end',
+                       self.handle_listener_ended)
+
+
 
     def handle_listener_started(self, message):
         self.autovolume = False
