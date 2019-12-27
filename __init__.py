@@ -51,9 +51,8 @@ class AutoVolume(MycroftSkill):
                 line = fh.readline()
                 if line == "":
                     break
-                # Ex:Energy:  cur=4 thresh=1.5
-                parts = line.split("=")
-                meter_thresh = float(parts[-1])
+                # Energy:  cur=4 thresh=4.773 muted=0
+                meter_thresh = float(line.split("=")[2].split(" ")[0])
 
         if self.settings.get('Highest messurement') is None:
             self.settings['Highest messurement'] = meter_thresh
@@ -100,9 +99,8 @@ class AutoVolume(MycroftSkill):
                 line = fh.readline()
                 if line == "":
                     break
-                # Ex:Energy:  cur=4 thresh=1.5
-                parts = line.split("=")
-                meter_thresh = float(parts[-1])
+                # Energy:  cur=4 thresh=4.773 muted=0
+                meter_thresh = float(line.split("=")[2].split(" ")[0])
 
         self.settings['Highest messurement'] = meter_thresh
         self.settings['Lowest messurement'] = meter_thresh
@@ -122,9 +120,8 @@ class AutoVolume(MycroftSkill):
                     line = fh.readline()
                     if line == "":
                         break
-                    # Ex:Energy:  cur=4 thresh=1.5
-                    parts = line.split("=")
-                    meter_thresh = float(parts[-1])
+                    # Energy:  cur=4 thresh=4.773 muted=0
+                    meter_thresh = float(line.split("=")[2].split(" ")[0])
 
                     self.meter_thresh_list.append(meter_thresh)
                     if len(self.meter_thresh_list) > 120:
