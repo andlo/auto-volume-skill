@@ -1,0 +1,16 @@
+skillMetadata:
+   sections:
+      - name: Volume settings
+        fields:
+          - name: High volume
+            type: number
+            label: High volume
+            value: "75"
+          - name: Normal volume
+            type: number
+            label: Normal volume
+            value: "60"
+          - name: Low volume
+            type: number
+            label: Low volume
+            value: "35"
